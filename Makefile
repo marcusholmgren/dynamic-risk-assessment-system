@@ -6,6 +6,7 @@ help:
 		@echo "  setup       create python virtual environment"
 		@echo "  install     install or update python virtual environment"
 		@echo "  ingestion   data ingestion"
+		@echo "  training    model training"
 		@echo ""
 		@echo "Check the Makefile to know exactly what each target is doing."
 
@@ -18,3 +19,6 @@ install:
 
 ingestion:
 	python ingestion.py
+
+training:
+	python training.py
