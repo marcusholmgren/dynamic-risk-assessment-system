@@ -1,9 +1,16 @@
+from io import StringIO
 
 import pandas as pd
 import numpy as np
 import timeit
 import os
 import json
+import logging
+import subprocess
+
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
+
 
 ##################Load config.json and get environment variables
 with open('config.json','r') as f:
@@ -29,7 +36,19 @@ def execution_time():
 
 ##################Function to check dependencies
 def outdated_packages_list():
-    #get a list of 
+    """
+    Check if any of the dependencies are outdated
+    :return:
+    """
+    logger.info('Checking for outdated packages')
+    process = subprocess.run(['pip3', 'list', '--outdated'], stdout=subprocess.PIPE)
+    raw_text = process.stdout.decode('utf-8')
+    df = pd.read_csv(StringIO(raw_text), index_col='Package', sep=r"\s+", skiprows=[1], engine='python')
+
+    requirements_df = pd.read_csv('requirements.txt', index_col='Package', sep='==',
+                                  names=['Package', 'Requirements.txt'], engine='python')
+
+    logger.info("Outdated Python packages\n %s", df.join(requirements_df, on='Package'))
 
 
 if __name__ == '__main__':
