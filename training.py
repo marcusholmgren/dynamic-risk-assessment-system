@@ -5,9 +5,7 @@ import os
 import pickle
 
 import pandas as pd
-from sklearn import metrics
 from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import train_test_split
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
@@ -35,21 +33,13 @@ def train_model(args: argparse.Namespace):
 
     logger.info('Loading data from %s/%s', dataset_csv_path, args.input_artifact)
     df = pd.read_csv(os.path.join(dataset_csv_path, args.input_artifact))
-    logger.info(', '.join(df.columns))
-    one_hot = pd.get_dummies(df['corporation'])
-    df = df.drop(['corporation'], axis=1)
-    df = pd.concat([df, one_hot], axis=1)
+    df['corporation'] = df['corporation'].apply(lambda x: sum(bytearray(x, 'utf-8')))
 
-    X_train, X_test, y_train, y_test = train_test_split(df.drop([args.target], axis=1), df[args.target], test_size=0.2)
+    y = df[args.target]
+    X = df.drop([args.target], axis=1)
 
-    model.fit(X_train, y_train)
-    logger.info('Model score %.4f', model.score(X_test, y_test))
-
-    logger.info('Model accuracy_score %.4f', metrics.accuracy_score(y_test, model.predict(X_test)))
-    logger.info('Model roc_auc_score %.4f', metrics.roc_auc_score(y_test, model.predict(X_test)))
-    logger.info('Model precision_score %.4f', metrics.precision_score(y_test, model.predict(X_test)))
-    logger.info('Model recall_score %.4f', metrics.recall_score(y_test, model.predict(X_test)))
-    logger.info('Model f1_score %.4f', metrics.f1_score(y_test, model.predict(X_test)))
+    model.fit(X, y)
+    logger.info('Model score %.4f on training data.', model.score(X, y))
 
     if not os.path.exists(model_path):
         os.makedirs(model_path)
