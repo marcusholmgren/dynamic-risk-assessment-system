@@ -8,6 +8,7 @@ help:
 		@echo "  ingestion   1. data ingestion"
 		@echo "  training    2. model training"
 		@echo "  scoring     3. model scoring"
+		@echo "  deploy      4. model deployment"
 		@echo ""
 		@echo "Check the Makefile to know exactly what each target is doing."
 
@@ -26,3 +27,6 @@ training:
 
 scoring:
 	python scoring.py
+
+deploy:
+	python deployment.py
