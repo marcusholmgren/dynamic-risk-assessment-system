@@ -14,8 +14,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(level
 logger = logging.getLogger('reporting')
 
 
-
-###############Load config.json and get path variables
+# Load config.json and get path variables
 with open('config.json', 'r') as f:
     config = json.load(f) 
 

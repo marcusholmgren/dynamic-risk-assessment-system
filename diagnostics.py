@@ -39,7 +39,7 @@ def model_predictions(df: pandas.DataFrame) -> List[float]:
 
     y_pred = model.predict(X)
     logger.info('Length of data: %s vs. predictions: %s', df.shape[0], len(y_pred))
-    return y_pred
+    return y_pred.tolist()
 
 
 def dataframe_summary() -> List[Tuple[str, List[float]]]:
