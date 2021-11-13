@@ -14,3 +14,38 @@ Folder structure of the project:
 ## Running the project
 
 The `Makefile` contains the commands to run the project.
+
+
+## cURL API Examples
+
+[cURL](https://curl.haxx.se/docs/manpage.html) examples for the API.
+
+### /prediction
+
+```bash
+curl -X POST --location "http://localhost:8000/prediction" \
+     -H "Content-Type: application/json; charset=utf-8" \
+     -d "{ \"data_file\": \"testdata/testdata.csv\" }"
+```
+
+### /scoring
+Get the F1 score for the trained model.
+
+```bash
+curl -X GET --location "http://localhost:8000/scoring"
+```
+
+### /summarystats
+Get summary statistics from the numerical fields of the ingested data.
+Reported as mean, median and standard deviation.
+
+```bash
+curl -X GET --location "http://localhost:8000/summarystats"
+```
+
+### /diagnostics
+Get percentage of missing values and the timing of ingestion and model training.
+
+```bash
+curl -X GET --location "http://localhost:8000/diagnostics"
+```

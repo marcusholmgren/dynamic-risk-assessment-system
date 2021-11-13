@@ -10,6 +10,8 @@ help:
 		@echo "  scoring     3. model scoring"
 		@echo "  deploy      4. model deployment"
 		@echo "  diag        5. model diagnostics"
+		@echo "  report      6. model reporting"
+		@echo "  run         7. run model REST API"
 		@echo ""
 		@echo "Check the Makefile to know exactly what each target is doing."
 
@@ -34,3 +36,9 @@ deploy:
 
 diag:
 	python diagnostics.py
+
+report:
+	python reporting.py
+
+run:
+	python app.py
