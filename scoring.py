@@ -8,7 +8,7 @@ import pandas as pd
 from sklearn import metrics
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-logger = logging.getLogger(__name__)
+logger = logging.getLogger('scoring')
 
 
 # Load config.json and get path variables

@@ -8,7 +8,7 @@ import pandas as pd
 from sklearn.linear_model import LogisticRegression
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-logger = logging.getLogger(__name__)
+logger = logging.getLogger('training')
 
 # Load config.json and get path variables
 with open('config.json', 'r') as f:

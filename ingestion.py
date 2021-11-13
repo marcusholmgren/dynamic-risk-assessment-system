@@ -1,14 +1,13 @@
-import pandas as pd
-import numpy as np
-import os
 import json
-from datetime import datetime
 import logging
+import os
+
+import pandas as pd
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-logger = logging.getLogger(__name__)
+logger = logging.getLogger('ingestion')
 
-#############Load config.json and get input and output paths
+# Load config.json and get input and output paths
 with open('config.json', 'r') as config_file:
     config = json.load(config_file)
 
