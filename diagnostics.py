@@ -23,12 +23,24 @@ test_data_path = os.path.join(config['test_data_path'])
 ##################Function to get model predictions
 def model_predictions():
     #read the deployed model and a test dataset, calculate predictions
-    return #return value should be a list containing all predictions
+    df = pd.read_csv(os.path.join(dataset_csv_path, 'finaldata.csv'))
+
+    na_stats = df.isna().sum() / df.count().sum()
+    stats_report = [f"{x[0]} pct NA: {x[1]}" for x in zip(na_stats.index, na_stats.tolist())]
+    return stats_report #return value should be a list containing all predictions
+
 
 ##################Function to get summary statistics
-def dataframe_summary():
-    #calculate summary statistics here
-    return #return value should be a list containing all summary statistics
+def dataframe_summary() -> List[str]:
+    """
+    Get summary statistics of the dataframe missing values
+    :return: List of columns missing values percentage
+    """
+    df = pd.read_csv(os.path.join(dataset_csv_path, 'finaldata.csv'))
+    na_stats = df.isna().sum() / df.count().sum()
+    stats_report = [f"{x[0]} pct NA: {x[1]}" for x in zip(na_stats.index, na_stats.tolist())]
+    return stats_report
+
 
 ##################Function to get timings
 def execution_time() -> List[float]:
@@ -62,7 +74,8 @@ def outdated_packages_list():
 
 if __name__ == '__main__':
     model_predictions()
-    dataframe_summary()
+    stats = dataframe_summary()
+    logger.info("Missing values stats: %s", stats)
     timing = execution_time()
     logger.info('Execution time ingestion: %.2f sec, training: %.2f sec', timing[0], timing[1])
     outdated_packages_list()
