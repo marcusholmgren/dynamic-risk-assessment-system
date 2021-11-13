@@ -1,22 +1,20 @@
+import json
+import logging
+import os
 import pickle
+import subprocess
+import timeit
 from io import StringIO
-
-from typing import List
+from typing import List, Tuple
 
 import pandas
 import pandas as pd
-import numpy as np
-import timeit
-import os
-import json
-import logging
-import subprocess
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger('diagnostics')
 
 
-##################Load config.json and get environment variables
+# Load config.json and get environment variables
 with open('config.json', 'r') as f:
     config = json.load(f) 
 
@@ -24,7 +22,7 @@ dataset_csv_path = os.path.join(config['output_folder_path'])
 production_deployment_path = os.path.join(config['prod_deployment_path'])
 test_data_path = os.path.join(config['test_data_path']) 
 
-##################Function to get model predictions
+
 def model_predictions(df: pandas.DataFrame) -> List[float]:
     """
     Get model predictions for the test data
@@ -44,9 +42,15 @@ def model_predictions(df: pandas.DataFrame) -> List[float]:
     return y_pred
 
 
-##################Function to get summary statistics
-def dataframe_summary() -> List[str]:
-    pass
+def dataframe_summary() -> List[Tuple[str, List[float]]]:
+    """
+    Get summary statistics of the dataframe
+    :return: List of columns summary statistics of mean, median and std
+    """
+    df = pd.read_csv(os.path.join(dataset_csv_path, 'finaldata.csv'))
+    summary = df.select_dtypes('number').agg(['mean', 'median', 'std'])
+    sum_stats = [(col, summary[col].values.tolist()) for col in summary.columns]
+    return sum_stats
 
 
 def dataframe_missing_values() -> List[str]:
@@ -60,7 +64,6 @@ def dataframe_missing_values() -> List[str]:
     return stats_report
 
 
-##################Function to get timings
 def execution_time() -> List[float]:
     """
     Calculate the execution time of the model
@@ -73,7 +76,6 @@ def execution_time() -> List[float]:
     return [ingestion_time, training_time]
 
 
-##################Function to check dependencies
 def outdated_packages_list():
     """
     Check if any of the dependencies are outdated
@@ -96,6 +98,8 @@ if __name__ == '__main__':
 
     preds = model_predictions(test_data_df)
     logger.info('Predictions: %s', preds)
+    stats = dataframe_summary()
+    logger.info('Summary statistics: %s', stats)
     na_stats = dataframe_missing_values()
     logger.info("Missing values stats: %s", na_stats)
     timing = execution_time()
