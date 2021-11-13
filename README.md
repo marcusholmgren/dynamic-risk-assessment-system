@@ -16,6 +16,17 @@ Folder structure of the project:
 The `Makefile` contains the commands to run the project.
 
 
+Start the REST API:
+```bash
+make run
+```
+
+Run script that invokes the REST API:
+```bash
+python apicalls.py
+```
+The output from the calls are writen to the file `practicemodels/apireturns.txt`
+
 ## cURL API Examples
 
 [cURL](https://curl.haxx.se/docs/manpage.html) examples for the API.

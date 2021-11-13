@@ -1,0 +1,61 @@
+{
+  "predictions": [
+    0, 
+    1, 
+    1, 
+    1, 
+    1
+  ]
+}
+{
+  "F1": "0.5714285714285715"
+}
+{
+  "stats": [
+    [
+      "lastmonth_activity", 
+      [
+        165.65384615384616, 
+        73.0, 
+        284.0332293669447
+      ]
+    ], 
+    [
+      "lastyear_activity", 
+      [
+        1502.923076923077, 
+        955.0, 
+        2192.6449584568304
+      ]
+    ], 
+    [
+      "number_of_employees", 
+      [
+        26.884615384615383, 
+        14.0, 
+        31.353885785435814
+      ]
+    ], 
+    [
+      "exited", 
+      [
+        0.5769230769230769, 
+        1.0, 
+        0.5038314736557788
+      ]
+    ]
+  ]
+}
+{
+  "pct_missing_values": [
+    "corporation pct NA: 0.0", 
+    "lastmonth_activity pct NA: 0.0", 
+    "lastyear_activity pct NA: 0.0", 
+    "number_of_employees pct NA: 0.0", 
+    "exited pct NA: 0.0"
+  ], 
+  "timing_sec": [
+    0.4429640020000001, 
+    0.83379454
+  ]
+}
