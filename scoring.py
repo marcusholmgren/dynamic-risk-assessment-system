@@ -8,7 +8,7 @@ import pandas as pd
 from sklearn import metrics
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-logger = logging.getLogger(__name__)
+logger = logging.getLogger('scoring')
 
 
 # Load config.json and get path variables
@@ -32,6 +32,7 @@ def score_model(args: argparse.Namespace):
     logger.info('Loading test data: %s/%s', test_data_path, args.test_data_name)
     test_df = pd.read_csv(os.path.join(test_data_path, args.test_data_name))
 
+    # encode corporation code to numeric value
     test_df['corporation'] = test_df['corporation'].apply(lambda x: sum(bytearray(x, 'utf-8')))
     y = test_df['exited']
     X = test_df.drop(['exited'], axis=1)

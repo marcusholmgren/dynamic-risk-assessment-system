@@ -8,7 +8,7 @@ import pandas as pd
 from sklearn.linear_model import LogisticRegression
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-logger = logging.getLogger(__name__)
+logger = logging.getLogger('training')
 
 # Load config.json and get path variables
 with open('config.json', 'r') as f:
@@ -33,6 +33,7 @@ def train_model(args: argparse.Namespace):
 
     logger.info('Loading data from %s/%s', dataset_csv_path, args.input_artifact)
     df = pd.read_csv(os.path.join(dataset_csv_path, args.input_artifact))
+    # encode corporation code to numeric value
     df['corporation'] = df['corporation'].apply(lambda x: sum(bytearray(x, 'utf-8')))
 
     y = df[args.target]

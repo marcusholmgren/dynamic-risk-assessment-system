@@ -9,6 +9,7 @@ help:
 		@echo "  training    2. model training"
 		@echo "  scoring     3. model scoring"
 		@echo "  deploy      4. model deployment"
+		@echo "  diag        5. model diagnostics"
 		@echo ""
 		@echo "Check the Makefile to know exactly what each target is doing."
 
@@ -30,3 +31,6 @@ scoring:
 
 deploy:
 	python deployment.py
+
+diag:
+	python diagnostics.py
