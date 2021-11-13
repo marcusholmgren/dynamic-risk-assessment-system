@@ -12,6 +12,7 @@ help:
 		@echo "  diag        5. model diagnostics"
 		@echo "  report      6. model reporting"
 		@echo "  run         7. run model REST API"
+		@echo "  auto        8. check model drift and re-train model if needed"
 		@echo ""
 		@echo "Check the Makefile to know exactly what each target is doing."
 
@@ -42,3 +43,6 @@ report:
 
 run:
 	python app.py
+
+auto:
+	python fullprocess.py

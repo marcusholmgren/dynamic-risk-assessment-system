@@ -18,7 +18,7 @@ logger = logging.getLogger('reporting')
 with open('config.json', 'r') as f:
     config = json.load(f) 
 
-dataset_csv_path = os.path.join(config['output_folder_path'])
+output_model_path = os.path.join(config['output_model_path'])
 test_data_path = os.path.join(config['test_data_path'])
 
 
@@ -36,12 +36,14 @@ def score_model(args: argparse.Namespace):
 
     # calculate the confusion matrix
     cm = metrics.confusion_matrix(y, y_preds)
-    _ = sns.heatmap(cm, annot=True, fmt='d', cmap='Blues')
+    _ = sns.heatmap(cm, annot=True, fmt='d', cmap='YlOrBr')
     plt.title(f'Confusion Matrix from {data_file}')
     plt.ylabel('True label')
     plt.xlabel('Predicted label')
     # write the confusion matrix to the workspace
-    plt.savefig(os.path.join(config['output_folder_path'], args.conf_matrix))
+    plot_file = os.path.join(output_model_path, args.conf_matrix)
+    plt.savefig(plot_file)
+    logger.info('Saved confusion matrix to %s', plot_file)
 
 
 if __name__ == '__main__':

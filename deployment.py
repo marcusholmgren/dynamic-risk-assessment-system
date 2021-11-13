@@ -21,13 +21,15 @@ def prepare_deployment():
     Copy files needed for deployment.
     :return:
     """
-
     def copy_file(filename, path):
         try:
             src = os.path.join(path, filename)
             dst = os.path.join(prod_deployment_path, filename)
-            logger.info('Copying file %s to %s', src, dst)
-            shutil.copy(src, dst)
+            if os.path.isfile(src):
+                logger.info('Copying file %s to %s', src, dst)
+                shutil.copy(src, dst)
+            else:
+                logger.warning('File %s does not exist', src)
         except:
             logger.error("Error copying file: ", src)
 

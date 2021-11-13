@@ -84,12 +84,16 @@ def outdated_packages_list():
     logger.info('Checking for outdated packages')
     process = subprocess.run(['pip3', 'list', '--outdated'], stdout=subprocess.PIPE)
     raw_text = process.stdout.decode('utf-8')
-    df = pd.read_csv(StringIO(raw_text), index_col='Package', sep=r"\s+", skiprows=[1], engine='python')
+    if raw_text:
+        logger.info('Outdated packages: %s', raw_text)
+        df = pd.read_csv(StringIO(raw_text), index_col='Package', sep=r"\s+", skiprows=[1], engine='python')
 
-    requirements_df = pd.read_csv('requirements.txt', index_col='Package', sep='==',
-                                  names=['Package', 'Requirements.txt'], engine='python')
+        requirements_df = pd.read_csv('requirements.txt', index_col='Package', sep='==',
+                                      names=['Package', 'Requirements.txt'], engine='python')
 
-    logger.info("Outdated Python packages\n %s", df.join(requirements_df, on='Package'))
+        logger.info("Outdated Python packages\n %s", df.join(requirements_df, on='Package'))
+    else:
+        logger.info('Yay! all packages are up to date')
 
 
 if __name__ == '__main__':
