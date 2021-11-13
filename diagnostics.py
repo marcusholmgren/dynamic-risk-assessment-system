@@ -1,5 +1,6 @@
 from io import StringIO
 
+from typing import List
 import pandas as pd
 import numpy as np
 import timeit
@@ -30,9 +31,17 @@ def dataframe_summary():
     return #return value should be a list containing all summary statistics
 
 ##################Function to get timings
-def execution_time():
-    #calculate timing of training.py and ingestion.py
-    return #return a list of 2 timing values in seconds
+def execution_time() -> List[float]:
+    """
+    Calculate the execution time of the model
+    :return: List of execution times - ingestion, training
+    """
+    ingestion_time = timeit.Timer(lambda: subprocess.run(['python', 'ingestion.py'],
+                                                         stdout=subprocess.PIPE)).timeit(number=1)
+    training_time = timeit.Timer(lambda: subprocess.run(['python', 'training.py'],
+                                                        stdout=subprocess.PIPE)).timeit(number=1)
+    return [ingestion_time, training_time]
+
 
 ##################Function to check dependencies
 def outdated_packages_list():
@@ -54,11 +63,6 @@ def outdated_packages_list():
 if __name__ == '__main__':
     model_predictions()
     dataframe_summary()
-    execution_time()
+    timing = execution_time()
+    logger.info('Execution time ingestion: %.2f sec, training: %.2f sec', timing[0], timing[1])
     outdated_packages_list()
-
-
-
-
-
-    
