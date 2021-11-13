@@ -27,6 +27,15 @@ python apicalls.py
 ```
 The output from the calls are writen to the file `practicemodels/apireturns.txt`
 
+## Run continious
+
+Ensure that the `fullprocess.sh` script can be executed.
+```
+chmod +x fullprocess.sh
+```
+
+![cronjob fullprocess.sh](./crontab_10_minutes.png)
+
 ## cURL API Examples
 
 [cURL](https://curl.haxx.se/docs/manpage.html) examples for the API.
