@@ -33,6 +33,7 @@ def train_model(args: argparse.Namespace):
 
     logger.info('Loading data from %s/%s', dataset_csv_path, args.input_artifact)
     df = pd.read_csv(os.path.join(dataset_csv_path, args.input_artifact))
+    # encode corporation code to numeric value
     df['corporation'] = df['corporation'].apply(lambda x: sum(bytearray(x, 'utf-8')))
 
     y = df[args.target]
